@@ -1,0 +1,82 @@
+🧭 Project Overview — “DocuMind MCP”
+
+Goal:
+An MCP server that allows an AI agent to list, read, and summarize documents — either from a local directory or via remote URLs.
+This project teaches you how to use MCP Resources and Prompts effectively.
+
+🧩 Core Learning Focus
+
+✅ Resources: Representing documents as structured MCP resources.
+
+✅ Prompts: Defining LLM-ready prompt templates for summarization.
+
+✅ Schema: Using structured returns (like JSON with uri, title, etc.).
+
+✅ Stateless access: Managing documents dynamically, not hardcoded.
+
+🧱 Suggested Project Structure
+📂 documind_mcp/
+ ┣ 📜 server.py           # Main MCP server with tools and resources
+ ┣ 📜 client.py           # MCP client to interact with tools
+ ┣ 📂 documents/          # Local .txt / .md / .pdf files
+ ┣ 📜 prompts.yaml        # Summarization prompt template
+ ┗ 📜 .env                # Any needed configs
+
+🧰 Tools to Implement
+1. list_documents()
+
+Purpose: Show available documents (both local + remote).
+
+Returns: A list of resource URIs, titles, and sizes.
+
+Learning: How to define and expose MCP resources dynamically.
+
+2. read_document(uri)
+
+Purpose: Fetch and return document content.
+
+Should handle:
+
+Local files (file://)
+
+Remote URLs (https://)
+
+Learning: Use aiofiles or httpx for async I/O and understand resource access patterns.
+
+3. summarize_document(uri)
+
+Purpose: Read a document and summarize it using a Prompt.
+
+Learning:
+
+Define a reusable summarization prompt template.
+
+Invoke it with variables ({content}).
+
+Send structured MCP PromptResponse.
+
+🧩 MCP Components to Practice
+Concept	Where to Use
+Resources	Register documents as resources (URI + metadata)
+Prompts	Define a reusable summarization instruction
+Tools	Entry points for listing, reading, summarizing
+Context	Use ctx.info() to show progress (like “Reading file…”)
+⚙️ Optional Enhancements
+
+🔍 Add a search_documents(keyword) tool using full-text search.
+
+🧠 Cache document metadata to speed up listing.
+
+🗂️ Support .txt, .md, .pdf formats.
+
+🪄 Add summarization “modes” (short / detailed / bullet-point).
+
+🎯 Expected Learning Outcomes
+
+By completing this project, you’ll:
+
+Understand how MCP resources map to real-world data.
+
+Learn how Prompts are registered and reused by an MCP client or Agent SDK.
+
+Be able to connect this MCP server to an OpenAI Agent that autonomously reads and summarizes files.
