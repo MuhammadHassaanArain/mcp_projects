@@ -16,6 +16,14 @@ It supports **local documents, remote URLs, prompts**, and real-time **LLM summa
 - ⚡ **Async I/O** → Uses `aiofiles` + `httpx` for fast file/network access  
 
 
+## Project Structure
+
+📂 documind_mcp/
+ ┣ 📜 server.py           # Main MCP server with tools and resources
+ ┣ 📜 client.py           # MCP client to interact with tools
+ ┣ 📂 documents/          # Local .txt / .md / .pdf files
+ ┣ 📜 prompts.yaml        # Summarization prompt template
+ ┗ 📜 .env                # Any needed configs
 
 ## 🛠 MCP Server (server.py)
 
