@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "task": "Push the code in GitHub Repo",
+    "task": "Push the code to GitHub Repo",
     "done": true
   },
   {
     "id": 2,
-    "task": "Post In LinkedIn",
+    "task": "Post on LinkedIn",
     "done": false
   }
 ]

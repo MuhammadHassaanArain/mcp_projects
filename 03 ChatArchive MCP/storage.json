@@ -1,19 +1,14 @@
 {
     "messages": [
         {
-            "user": "Hassaan",
-            "message": "Hey",
-            "timestamp": "2025-11-15T11:46:00.322454"
-        },
-        {
-            "user": "Haris",
-            "message": "Hello",
-            "timestamp": "2025-11-15T11:46:16.001560"
+            "user": "user1",
+            "message": "what's up",
+            "timestamp": "2025-11-21T12:27:10.617919"
         },
         {
             "user": "user1",
             "message": "what's up",
-            "timestamp": "2025-11-15T11:46:46.438036"
+            "timestamp": "2025-11-21T12:27:25.563382"
         }
     ]
 }

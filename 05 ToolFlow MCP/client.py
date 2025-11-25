@@ -3,6 +3,10 @@ from typing import Optional, Any
 from mcp.client.streamable_http import streamablehttp_client
 from mcp import ClientSession
 from contextlib import AsyncExitStack
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from rich import box
 
 
 class MCPCient():
@@ -41,32 +45,52 @@ class MCPCient():
     async def call_tool(self, tool_name:str, arguments:dict[str,any] | None):
         result = await self._session.call_tool(name=tool_name, arguments=arguments or {})
         return result.content
+    
 
+
+console = Console()
+def pretty(title, text, emoji="✨", color="cyan", box_style=box.ROUNDED):
+    console.print(
+        Panel.fit(
+            f"{emoji} [bold {color}]{title}[/bold {color}]\n\n{text}",
+            title=f"[{color}]{title.upper()}[/]",
+            box=box_style
+        )
+    )
 
 async def main():
     async with MCPCient("http://localhost:8000/mcp") as client:
-        list_tool = await client.list_tools()
-        for tool in list_tool:
-            print("TOOL : ", tool.name)
+# List Tools Availabe
+        tools = await client.list_tools()
+        table = Table(title="Available MCP Tools", box=box.SIMPLE_HEAVY)
+        table.add_column("Tool Name", style="cyan", no_wrap=True)
+        for tool in tools:
+            table.add_row(tool.name)
+        console.print(table)
 
-        add_task1  = await client.call_tool("add_task", arguments={"task":"Push the code in GitHub Repo"})
-        print("Task Added : ", add_task1[0].text)
+# Add Tasks
+        add_task1 = await client.call_tool("add_task", arguments={"task": "Push the code to GitHub Repo"})
+        pretty("Task Added", add_task1[0].text, emoji="📌", color="green")
 
-        add_task2 = await client.call_tool("add_task", arguments={"task":"Post In LinkedIn"})
-        print("Task Added : ", add_task2[0].text)
+        add_task2 = await client.call_tool("add_task", arguments={"task": "Post on LinkedIn"})
+        pretty("Task Added", add_task2[0].text, emoji="📌", color="green")
 
-        add_task3 = await client.call_tool("add_task",arguments={"task":"Complete the Class Assignment"})
-        print("Task Added : ", add_task3[0].text)
+        add_task3 = await client.call_tool("add_task", arguments={"task": "Complete Class Assignment"})
+        pretty("Task Added", add_task3[0].text, emoji="📌", color="green")
+# GET Tasks 
+        get_task = await client.call_tool("get_task", arguments={"task_id": 1})
+        pretty("Task Details", get_task[0].text, emoji="🔎", color="yellow", box_style=box.DOUBLE_EDGE)
 
-        get_task = await client.call_tool("get_task", arguments={"task_id":1})
-        print("GET TASK : ", get_task[0].text)
+# Mark Done
+        mark_done = await client.call_tool("mark_done", arguments={"task_id": 1})
+        pretty("Task Completed", mark_done[0].text, emoji="✅", color="magenta")
 
-        mark_done = await client.call_tool("mark_done", arguments={"task_id" : 1})
-        print("MARK DONE : ", mark_done[0].text)
+        mark_done = await client.call_tool("mark_done", arguments={"task_id": 3})
+        pretty("Task Completed", mark_done[0].text, emoji="✅", color="magenta")
 
-        mark_done = await client.call_tool("mark_done", arguments={"task_id" : 3})
-        print("MARK DONE : ", mark_done[0].text)
+# Delete Task
+        delete_task = await client.call_tool("delete_task", arguments={"task_id": 3})
+        pretty("Task Deleted", delete_task[0].text, emoji="🗑️", color="red")
 
-        delete_task = await client.call_tool("delete_task", arguments={"task_id":3})
-        print("DELETE TASK : ", delete_task[0].text)
+
 asyncio.run(main())

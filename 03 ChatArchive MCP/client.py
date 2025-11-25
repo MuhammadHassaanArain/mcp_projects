@@ -47,10 +47,10 @@ class MCPClient:
 
 async def main():
     async with MCPClient("http://localhost:8000/mcp") as client:
-        print("LIST TOOLS ⚙")
-        list_tools = await client.tool_list()
-        for tool in list_tools:
-            print("Tool Name : ", tool.name)
+        # print("LIST TOOLS ⚙")
+        # list_tools = await client.tool_list()
+        # for tool in list_tools:
+        #     print("Tool Name : ", tool.name)
         
         print("\n TOOL CALLS 🔧")
         tool_call = await client.tool_call("save_message", arguments={"user":"user1","msg":"what's up"})
